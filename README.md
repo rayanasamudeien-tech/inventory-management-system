@@ -1,53 +1,39 @@
 # Inventory Management System - Deployment Guide
 
-This application is configured for deployment on Render.com with a multi-service setup including backend API, frontend, and PostgreSQL database.
+This application is configured for deployment on Railway with a backend API, frontend, and PostgreSQL database.
 
-## 🚀 Quick Deploy to Render
+## 🚀 Quick Deploy to Railway
 
 ### Prerequisites
-1. Create a [Render.com](https://render.com) account
+1. Create a [Railway.app](https://railway.app) account
 2. Connect your GitHub repository
 
 ### Deployment Steps
 
-1. **Fork/Clone this repository to your GitHub**
+1. **Fork/Clone this repository to GitHub**
 
-2. **Deploy on Render:**
-   - Go to [Render Dashboard](https://dashboard.render.com)
-   - Click "New" → "Blueprint"
-   - Connect your GitHub repository
-   - Render will automatically detect the `render.yaml` file
+2. **Deploy on Railway:**
+   - Go to [Railway Dashboard](https://railway.app)
+   - Create a new project and connect your GitHub repository
+   - Add a PostgreSQL plugin to the project
+   - Add a web service for the backend using the `/backend` directory
+   - Add a web service for the frontend using the `/frontend` directory
 
-3. **Or deploy services individually:**
-   - **Database:** Create a PostgreSQL database service
-   - **Backend:** Create a Web Service pointing to `/backend` directory
-   - **Frontend:** Create a Web Service pointing to `/frontend` directory
-
-### Environment Variables
-
-The `render.yaml` file automatically configures:
-- **Backend:**
-  - `DATABASE_URL`: Auto-generated from PostgreSQL service
-  - `JWT_SECRET`: Auto-generated secure secret
-  - `NODE_ENV=production`
-  - `PORT=10000`
-
-- **Frontend:**
-  - `NEXT_PUBLIC_API_URL`: Auto-generated from backend service
-  - `NODE_ENV=production`
+3. **Environment variables:**
+   - Set `DATABASE_URL` from the Railway Postgres plugin
+   - Set `JWT_SECRET` to a secure random string
+   - Set `PORT` for the backend service if needed (Railway will auto-assign)
+   - Set `NEXT_PUBLIC_API_URL` to the deployed backend URL
+   - Set `CORS_ORIGINS` to allowed frontend origins, for example:
+     - `https://your-app.up.railway.app,http://localhost:3000`
 
 ### Manual Database Setup
 
-After deployment, run these commands in the backend service shell:
+After deployment, run these commands in the backend shell:
 
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Run database migrations
 npx prisma migrate deploy
-
-# Seed initial data
 npx prisma db seed
 ```
 
@@ -60,30 +46,23 @@ After seeding, you can login with:
 ### Services URLs
 
 After deployment, you'll have:
-- **Frontend:** `https://your-app-name.onrender.com`
-- **Backend API:** `https://your-backend-name.onrender.com`
-- **Database:** Internal PostgreSQL instance
+- **Frontend:** `https://your-app.up.railway.app`
+- **Backend API:** `https://your-backend.up.railway.app`
+- **Database:** Railway PostgreSQL plugin URL
 
 ### Troubleshooting
 
 1. **Build Failures:**
-   - Check build logs in Render dashboard
-   - Ensure Node.js version is 18+
+   - Check Railway build logs
+   - Ensure Node.js version is 18+ in `backend/package.json`
 
 2. **Database Connection:**
    - Verify `DATABASE_URL` is set correctly
-   - Check database service is running
+   - Confirm the PostgreSQL plugin is attached to the project
 
 3. **API Calls Failing:**
-   - Ensure `NEXT_PUBLIC_API_URL` points to backend service
-   - Check CORS settings in backend
-
-### Production Notes
-
-- JWT secrets are auto-generated for security
-- Database is configured with free tier (upgrade as needed)
-- Both services auto-scale based on traffic
-- Logs are available in Render dashboard
+   - Ensure `NEXT_PUBLIC_API_URL` points to the backend deployment URL
+   - Set `CORS_ORIGINS` to allow the frontend origin
 
 ## 🔧 Local Development
 
@@ -105,6 +84,5 @@ npm run dev
 /
 ├── backend/          # NestJS API
 ├── frontend/         # Next.js App
-├── render.yaml       # Render deployment config
 └── README.md         # This file
 ```
