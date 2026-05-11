@@ -1,53 +1,66 @@
-# Inventory Management System - Deployment Guide
+# Inventory Management System
 
-This application is configured for deployment on Railway with a backend API, frontend, and PostgreSQL database.
+A comprehensive inventory and asset management system built with NestJS (backend) and Next.js (frontend).
 
-## 🚀 Quick Deploy to Railway
+## Features
+
+- Asset tracking and management
+- Stock inventory control
+- User authentication and authorization
+- Maintenance request system
+- Reporting and analytics
+- QR code generation for assets
+
+## Tech Stack
+
+- **Backend:** NestJS, Prisma ORM, PostgreSQL, JWT Authentication
+- **Frontend:** Next.js, React, TypeScript, Tailwind CSS
+- **Database:** PostgreSQL
+
+## Local Development
 
 ### Prerequisites
-1. Create a [Railway.app](https://railway.app) account
-2. Connect your GitHub repository
 
-### Deployment Steps
+- Node.js 20.19+
+- PostgreSQL database
+- npm or yarn
 
-1. **Fork/Clone this repository to GitHub**
+### Setup
 
-2. **Deploy on Railway:**
-   - Go to [Railway Dashboard](https://railway.app)
-   - Create a new project and connect your GitHub repository
-   - Add a PostgreSQL plugin to the project
-   - Add a web service for the backend using the `/backend` directory
-   - Add a web service for the frontend using the `/frontend` directory
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd inventory-management-system
+   ```
 
-3. **Environment variables:**
-   - Set `DATABASE_URL` from the Railway Postgres plugin
-   - Set `JWT_SECRET` to a secure random string
-   - Set `PORT` for the backend service if needed (Railway will auto-assign)
-   - Set `NEXT_PUBLIC_API_URL` to the deployed backend URL
-   - Set `CORS_ORIGINS` to allowed frontend origins, for example:
-     - `https://your-app.up.railway.app,http://localhost:3000`
+2. **Backend Setup**
+   ```bash
+   cd backend
+   npm install
+   # Set up your DATABASE_URL in .env
+   npm run start:dev
+   ```
 
-### Manual Database Setup
-
-After deployment, run these commands in the backend shell:
-
-```bash
-cd backend
-npx prisma migrate deploy
-npx prisma db seed
-```
+3. **Frontend Setup**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
 ### Default Admin Account
 
-After seeding, you can login with:
 - **Email:** `admin@starhacs.edu`
 - **Password:** `admin123`
 
-### Services URLs
+## Deployment
 
-After deployment, you'll have:
-- **Frontend:** `https://your-app.up.railway.app`
-- **Backend API:** `https://your-backend.up.railway.app`
+This application can be deployed to various cloud platforms. Configure the following environment variables:
+
+- `DATABASE_URL`: PostgreSQL connection string
+- `JWT_SECRET`: Secure random string for JWT tokens
+- `CORS_ORIGINS`: Allowed frontend origins (comma-separated)
+- `NEXT_PUBLIC_API_URL`: Backend API URL for frontend
 - **Database:** Railway PostgreSQL plugin URL
 
 ### Troubleshooting
