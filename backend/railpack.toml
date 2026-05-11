@@ -1,0 +1,8 @@
+[deploy]
+startCommand = "npm run start:prod"
+
+[build]
+buildCommand = "npm run build"
+
+[[build.includeFiles]]
+path = "dist"
