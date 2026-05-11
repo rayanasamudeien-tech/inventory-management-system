@@ -5,7 +5,7 @@ services:
     rootDir: backend
     runtime: node
     installCommand: npm ci --include=dev
-    buildCommand: npm run build
+    buildCommand: npx nest build
     startCommand: npm run start:prod
     envVars:
       - key: NODE_ENV
