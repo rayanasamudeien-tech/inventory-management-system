@@ -36,7 +36,12 @@ export default function LoginPage() {
       setAuth(user, access_token);
       router.push('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Invalid email or password');
+      console.error('Login error:', err);
+      const message =
+        err.response?.data?.message ||
+        err.message ||
+        'Invalid email or password';
+      setError(message);
     } finally {
       setLoading(false);
     }

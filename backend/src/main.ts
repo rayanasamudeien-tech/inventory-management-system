@@ -7,7 +7,16 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
   // Enable CORS for frontend communication
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'https://inventory-frontend-rdoz.onrender.com',
+      'https://inventory-backend-ni4j.onrender.com',
+      'http://localhost:3000',
+      'http://localhost:3001',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
   
   // Global validation pipe
   app.useGlobalPipes(new ValidationPipe({
