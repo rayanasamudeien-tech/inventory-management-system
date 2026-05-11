@@ -2,7 +2,9 @@ services:
   # Backend API Service
   - type: web
     name: inventory-backend
+    rootDir: backend
     runtime: node
+    installCommand: npm ci
     buildCommand: npm run build
     startCommand: npm run start:prod
     envVars:
@@ -22,7 +24,9 @@ services:
   # Frontend Service
   - type: web
     name: inventory-frontend
+    rootDir: frontend
     runtime: node
+    installCommand: npm ci
     buildCommand: npm run build
     startCommand: npm start
     envVars:
